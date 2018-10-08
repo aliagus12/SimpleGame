@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">SimpleGame</string>
+    <string name="title">Rancang Bangun Game Edukasi Membuang Sampah pada Tempatnya Dengan Menggunakan Linear Congruent Method Berbasis Android</string>
+    <string name="mulai">Mulai</string>
+    <string name="panduan">Panduan</string>
+    <string name="materi">Materi</string>
+    <string name="aplikasi">Aplikasi</string>
+    <string name="title_panduan_aplikasi">Untuk Penggunaan Game Edukasi ini, akan muncul gambar sampah, dan sampah tersebut kamu harus memilih keranjang yang benar . Tetapi ingat memiliki waktu yang terbatas.</string>
+    <string name="selamat_bermain">Selamat bermain</string>
+    <string name="title_materi">Materi</string>
+    <string name="sampah_organik">Sampah Organik</string>
+    <string name="sampah_organik_is">Sampah Plastik adalah sampah yang berasal dari bahan plastik, jenis sampah ini juga sulit untuk terurai. Jenis sampah ini juga termasuk Sampah Anorganik.</string>
+    <string name="sampah_anorganik">Sampah Anorganik</string>
+    <string name="sampah_anorganik_is">Sampah Anorganik adalah sampah yang dihasilkan dari berbagai macam proses, dimana jenis sampah ini tidak akan bisa terurai oleh bakteri secara alami.</string>
+    <string name="sampah_plastik">Sampah Plastik</string>
+    <string name="sampah_plastik_is">Sampah Plastik adalah sampah yang berasal dari bahan plastik, jenis sampah ini juga sulit untuk terurai. Jenis sampah ini juga termasuk Sampah Anorganik.</string>
+    <string name="sampah_logam">Sampah Logam</string>
+    <string name="sampah_logam_is">Sampah Logam adalah sampah yang berasal dari bahan logam, jenis sampah ini juga sulit untuk terurai. Jenis sampah ini juga termasuk Sampah Anorganik</string>
+    <string name="sampah_kaca">Sampah Kaca</string>
+    <string name="sampah_kaca_is">Sampah Kaca adalah sampah yang berasal dari bahan Kaca, jenis sampah ini juga sulit untuk terurai. Jenis sampah ini juga termasuk Sampah Anorganik.</string>
+    <string name="sampah_kertas_tumbuhan">Sampah Kertas atau Tumbuhan</string>
+    <string name="sampah_kertas_tumbuhan_is">Sampah Kertas/Tumbuhan adalah sampah yang berasal dari bahan Kertas/Tumbuhan, jenis sampah ini juga sulit untuk terurai. Jenis sampah ini juga termasuk Sampah organik.</string>
+    <string name="start">Start</string>
+    <string name="finish">Finish</string>
+    <string name="choose">Ayo... Pilih Keranjang yang benar, untuk sampah diatas !\"</string>
+    <string name="next">Next</string>
+    <string name="setting">Setting</string>
+    <string name="level_one">Level 1</string>
+    <string name="level_two">Level 2</string>
+    <string name="level_three">Level 3</string>
+    <string name="save">Save</string>
+</resources>

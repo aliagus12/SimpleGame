@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_pedesaan"
+    android:padding="@dimen/ten"
+    tools:context=".Intro">
+
+    <TextView
+        android:id="@+id/_txt_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/fifty"
+        android:gravity="center"
+        android:lineSpacingExtra="16sp"
+        android:text="@string/title"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/size_title"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/one_hundred"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/_btn_mulai"
+            android:layout_width="@dimen/btn_start"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@android:color/holo_blue_bright"
+            android:fontFamily="sans-serif-smallcaps"
+            android:text="@string/mulai"
+            android:textSize="@dimen/twenty_two"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/_btn_panduan"
+            android:layout_width="@dimen/btn_panduan"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/twenty_two"
+            android:background="@android:color/holo_blue_bright"
+            android:fontFamily="sans-serif-smallcaps"
+            android:text="@string/panduan"
+            android:textSize="@dimen/twenty_two"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Setting">
+
+    <include layout="@layout/general_toolbar" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?android:attr/actionBarSize"
+        android:alpha="0.3"
+        android:background="@drawable/background_pedesaan"
+        tools:ignore="ContentDescription" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?android:attr/actionBarSize"
+        android:orientation="vertical"
+        android:padding="@dimen/ten"
+        tools:ignore="UselessParent">
+
+        <CheckBox
+            android:id="@+id/_chk_level_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/level_one"
+            android:textSize="@dimen/twenty_two" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/ten">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/tong"
+                android:layout_weight="1"
+                android:src="@drawable/tong1"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/tong"
+                android:layout_weight="1"
+                android:src="@drawable/tong2"
+                tools:ignore="ContentDescription" />
+
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/_chk_level_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/level_two"
+            android:textSize="@dimen/twenty_two" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/ten">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/tong"
+                android:layout_weight="1"
+                android:src="@drawable/tong1"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/tong"
+                android:layout_weight="1"
+                android:src="@drawable/tong2"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/tong"
+                android:layout_weight="1"
+                android:src="@drawable/tong6"
+                tools:ignore="ContentDescription" />
+
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/_chk_level_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/level_three"
+            android:textSize="@dimen/twenty_two" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/ten">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/tong"
+                android:layout_weight="1"
+                android:src="@drawable/tong5"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/tong"
+                android:layout_weight="1"
+                android:src="@drawable/tong3"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/tong"
+                android:layout_weight="1"
+                android:src="@drawable/tong6"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/tong"
+                android:layout_weight="1"
+                android:src="@drawable/tong4"
+                tools:ignore="ContentDescription" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

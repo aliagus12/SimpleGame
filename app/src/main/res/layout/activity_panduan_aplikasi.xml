@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_pedesaan"
+    android:padding="@dimen/five"
+    tools:context=".PanduanAplikasi">
+
+    <TextView
+        android:id="@+id/_txt_title_panduan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/fifty"
+        android:gravity="center"
+        android:lineSpacingExtra="4sp"
+        android:text="@string/title_panduan_aplikasi"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/title_panduan_apliksi"
+        android:textStyle="bold"
+        app:fontFamily="casual" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/_txt_title_panduan"
+        android:layout_marginTop="@dimen/fifty"
+        android:gravity="center"
+        android:text="@string/selamat_bermain"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/title_panduan_apliksi"
+        android:textStyle="bold"
+        app:fontFamily="casual" />
+
+</RelativeLayout>

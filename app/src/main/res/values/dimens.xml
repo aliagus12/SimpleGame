@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="size_title">24sp</dimen>
+    <dimen name="five">5dp</dimen>
+    <dimen name="one_hundred">100dp</dimen>
+    <dimen name="fifty">50dp</dimen>
+    <dimen name="twenty_two">22sp</dimen>
+    <dimen name="btn_start">150dp</dimen>
+    <dimen name="btn_panduan">150dp</dimen>
+    <dimen name="title_panduan_apliksi">25sp</dimen>
+    <dimen name="title_materi">25sp</dimen>
+    <dimen name="question">200dp</dimen>
+    <dimen name="ten">10dp</dimen>
+    <dimen name="tong">75dp</dimen>
+</resources>
