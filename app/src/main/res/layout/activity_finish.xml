@@ -11,15 +11,83 @@
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize" />
 
-    <RelativeLayout
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/_toolbar_finish">
+        android:layout_below="@id/_toolbar_finish"
+        android:alpha="0.3"
+        android:background="@drawable/background_pedesaan" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:padding="@dimen/ten">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/_txt_ucapan_selamat"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Finish" />
+            android:gravity="center"
+            android:text="Selamat, Kamu adalah anak yang Pintar."
+            android:textColor="@android:color/black"
+            android:textSize="25sp"
+            android:textStyle="bold|italic" />
+
+        <TextView
+            android:id="@+id/_txt_motivasi1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/_txt_ucapan_selamat"
+            android:layout_marginTop="@dimen/fifty"
+            android:gravity="center"
+            android:text="Ayo... Jangan lupa untuk membuang sampah tempatnya."
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="italic" />
+
+        <TextView
+            android:id="@+id/_txt_motivasi2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/_txt_motivasi1"
+            android:gravity="center"
+            android:text="Kalau bukan kita siapa lagi???"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="italic" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/_txt_motivasi2"
+            android:layout_marginTop="@dimen/fifty"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/_btn_ulangi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/ten"
+                android:layout_marginTop="@dimen/fifty"
+                android:layout_weight="1"
+                android:background="@drawable/background_rectangle_blue_with_radius"
+                android:text="Ulangi"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:id="@+id/_btn_lanjut"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/ten"
+                android:layout_marginTop="@dimen/fifty"
+                android:layout_weight="1"
+                android:background="@drawable/background_rectangle_green_with_radius"
+                android:text="Lanjut"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
+
 
     </RelativeLayout>
 

@@ -33,6 +33,11 @@ class Game : AppCompatActivity() {
     private var level = 1
     private var wrong = 0
     private val codeRequestSetting = 109
+    private val codeRequestFinish = 108
+    private var totalIndexSoalLevel = 9
+    private val kodeKeluar = 0
+    private val kodeUlangi = 1
+    private val kodeLanjut = 2
     private val TAG = Game::class.java.simpleName
 
     private var timerCounter = object : CountDownTimer(90000, 1000) {
@@ -42,7 +47,7 @@ class Game : AppCompatActivity() {
 
         override fun onFinish() {
             isFinishAll = true
-            startActivity(intentFor<Finish>())
+            startActivityForResult(intentFor<Finish>("score" to score), codeRequestFinish)
         }
     }
 
@@ -78,6 +83,20 @@ class Game : AppCompatActivity() {
             codeRequestSetting -> {
                 level = data?.getIntExtra("level", 1) ?: 1
                 checkVisibility()
+            }
+
+            codeRequestFinish -> {
+                val code = data?.getIntExtra("code", 0)
+                when (code) {
+                    kodeKeluar -> finish()
+                    kodeLanjut -> {
+                        level += 1
+                        onResume()
+                    }
+                    kodeUlangi -> {
+                        onResume()
+                    }
+                }
             }
         }
     }
@@ -287,6 +306,7 @@ class Game : AppCompatActivity() {
         isStart = true
         timerCounter.start()
         checkVisibility()
+        _general_toolbar.menu.findItem(R.id.menu_setting).isVisible = !isStart
         _img_question.setImageDrawable(copyListSoal[index])
     }
 
@@ -294,6 +314,7 @@ class Game : AppCompatActivity() {
         _linear_question.visibility = if (isStart) View.VISIBLE else View.GONE
         _btn_start_game.visibility = if (isStart) View.GONE else View.VISIBLE
         _btn_finish_game.visibility = if (isStart) View.VISIBLE else View.GONE
+        _relative_top.visibility = if (isStart) View.VISIBLE else View.GONE
     }
 
     private fun checkSampah(listJenisSampah: ArrayList<Int>) {
@@ -301,7 +322,7 @@ class Game : AppCompatActivity() {
         if (listJenisSampah.contains(indexReal)) {
             score += 1
             _txt_score.text = score.toString()
-            if (index == 9) {
+            if (index == totalIndexSoalLevel) {
                 timerCounter.onFinish()
             } else {
                 showRightDialog(score.toString())
@@ -349,6 +370,16 @@ class Game : AppCompatActivity() {
              }
          }
      }*/
+
+    override fun onStop() {
+        super.onStop()
+        timerCounter.cancel()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        timerCounter.cancel()
+    }
 
     private fun showRightDialog(score: String) {
         val dialog = Dialog(this@Game)

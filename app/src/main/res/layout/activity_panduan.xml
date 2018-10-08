@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_pedesaan"
     tools:context=".Panduan">
 
     <include
@@ -12,6 +11,13 @@
         layout="@layout/general_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/_toolbar_game"
+        android:alpha="0.3"
+        android:background="@drawable/background_pedesaan" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -24,9 +30,10 @@
             android:layout_width="@dimen/btn_start"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@android:color/holo_blue_bright"
-            android:fontFamily="sans-serif-smallcaps"
+            android:background="@drawable/background_rectangle_blue_with_radius"
+            android:fontFamily="casual"
             android:text="@string/materi"
+            android:textColor="@android:color/white"
             android:textSize="@dimen/twenty_two"
             android:textStyle="bold" />
 
@@ -36,9 +43,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/twenty_two"
-            android:background="@android:color/holo_blue_bright"
-            android:fontFamily="sans-serif-smallcaps"
+            android:background="@drawable/background_rectangle_blue_with_radius"
+            android:fontFamily="casual"
             android:text="@string/aplikasi"
+            android:textColor="@android:color/white"
             android:textSize="@dimen/twenty_two"
             android:textStyle="bold" />
 
