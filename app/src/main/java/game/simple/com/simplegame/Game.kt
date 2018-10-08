@@ -3,6 +3,7 @@ package game.simple.com.simplegame
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.drawable.Drawable
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.support.v4.content.ContextCompat
@@ -38,6 +39,11 @@ class Game : AppCompatActivity() {
     private val kodeKeluar = 0
     private val kodeUlangi = 1
     private val kodeLanjut = 2
+    private var pathSoundChoose = ""
+    private var pathSoundPlayGame = ""
+    private lateinit var mediaPlayerChooseRight: MediaPlayer
+    private lateinit var mediaPlayerChooseWrong: MediaPlayer
+    private lateinit var mediaPlayerPlayGame: MediaPlayer
     private val TAG = Game::class.java.simpleName
 
     private var timerCounter = object : CountDownTimer(90000, 1000) {
@@ -47,6 +53,9 @@ class Game : AppCompatActivity() {
 
         override fun onFinish() {
             isFinishAll = true
+            if (mediaPlayerPlayGame.isPlaying) mediaPlayerPlayGame.stop();mediaPlayerPlayGame.reset()
+            if (mediaPlayerChooseRight.isPlaying) mediaPlayerChooseRight.stop();mediaPlayerChooseRight.reset()
+            if (mediaPlayerChooseWrong.isPlaying) mediaPlayerChooseWrong.stop();mediaPlayerChooseWrong.reset()
             startActivityForResult(intentFor<Finish>("score" to score), codeRequestFinish)
         }
     }
@@ -63,6 +72,8 @@ class Game : AppCompatActivity() {
         setLogam()
         setPlastik()
         setTumbuhan()
+        setMediaPlayer()
+        mediaPlayerPlayGame = MediaPlayer.create(this@Game, R.raw.anak_indonesia)
         setComponent()
     }
 
@@ -113,6 +124,8 @@ class Game : AppCompatActivity() {
             _txt_timer.text = "0"
             _txt_score.text = "0"
             checkVisibility()
+            mediaPlayerPlayGame = MediaPlayer.create(this@Game, R.raw.anak_indonesia)
+            setMediaPlayer()
             copyListSoal.shuffle()
         } else {
 
@@ -258,6 +271,11 @@ class Game : AppCompatActivity() {
         }
     }
 
+    private fun setMediaPlayer() {
+        mediaPlayerChooseRight = MediaPlayer.create(this@Game, R.raw.sound_yee)
+        mediaPlayerChooseWrong = MediaPlayer.create(this@Game, R.raw.wrong)
+    }
+
     private fun setComponent() {
         checkVisibility()
         _btn_start_game.setOnClickListener { startGame() }
@@ -304,6 +322,7 @@ class Game : AppCompatActivity() {
             }
         }
         isStart = true
+        if (!mediaPlayerPlayGame.isPlaying) mediaPlayerPlayGame.start()
         timerCounter.start()
         checkVisibility()
         _general_toolbar.menu.findItem(R.id.menu_setting).isVisible = !isStart
@@ -325,60 +344,28 @@ class Game : AppCompatActivity() {
             if (index == totalIndexSoalLevel) {
                 timerCounter.onFinish()
             } else {
+                if (mediaPlayerPlayGame.isPlaying) mediaPlayerPlayGame.pause()
+                if (!mediaPlayerChooseRight.isPlaying) mediaPlayerChooseRight.start()
                 showRightDialog(score.toString())
             }
         } else {
             wrong += 1
+            if (mediaPlayerPlayGame.isPlaying) mediaPlayerPlayGame.pause()
+            if (!mediaPlayerChooseWrong.isPlaying) mediaPlayerChooseWrong.start()
             showWrongDialog(score.toString(), wrong)
         }
     }
 
-    /* private fun checkOrganik() {
-         indexReal = listSoal.indexOf(copyListSoal[index])
-         if (listOrganik.contains(indexReal)) {
-             score += 1
-             _txt_score.text = score.toString()
-             if (index == copyListSoal.size - 1) {
-                 timerCounter.onFinish()
-             } else {
-                 showRightDialog(score.toString())
-             }
-         } else {
-             if (index == copyListSoal.size - 1) {
-                 timerCounter.onFinish()
-             } else {
-                 showWrongDialog(score.toString())
-             }
-         }
-     }
-
-     private fun checkAnOrganik() {
-         indexReal = listSoal.indexOf(copyListSoal[index])
-         if (listAnOrganik.contains(indexReal)) {
-             score += 1
-             _txt_score.text = score.toString()
-             if (index == copyListSoal.size - 1) {
-                 timerCounter.onFinish()
-             } else {
-                 showRightDialog(score.toString())
-             }
-         } else {
-             if (index == copyListSoal.size - 1) {
-                 timerCounter.onFinish()
-             } else {
-                 showWrongDialog(score.toString())
-             }
-         }
-     }*/
-
     override fun onStop() {
         super.onStop()
         timerCounter.cancel()
+        resetAllMediaPlayer()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         timerCounter.cancel()
+        resetAllMediaPlayer()
     }
 
     private fun showRightDialog(score: String) {
@@ -386,6 +373,9 @@ class Game : AppCompatActivity() {
         dialog.setContentView(R.layout.dialog_right_choose)
         dialog._txt_score_dialog.text = score
         dialog._btn_next.setOnClickListener {
+            if (mediaPlayerChooseRight.isPlaying) mediaPlayerChooseRight.stop(); mediaPlayerChooseRight.reset()
+            if (!mediaPlayerPlayGame.isPlaying) mediaPlayerPlayGame.start()
+            setMediaPlayer()
             nextQuestion()
             dialog.dismiss()
         }
@@ -404,6 +394,9 @@ class Game : AppCompatActivity() {
             dialog._btn_next_wrong.visibility = View.GONE
         }
         dialog._btn_next_wrong.setOnClickListener {
+            if (mediaPlayerChooseWrong.isPlaying) mediaPlayerChooseWrong.stop();mediaPlayerChooseWrong.reset()
+            if (!mediaPlayerPlayGame.isPlaying) mediaPlayerPlayGame.start()
+            setMediaPlayer()
             nextQuestion()
             dialog.dismiss()
         }
@@ -418,5 +411,16 @@ class Game : AppCompatActivity() {
     private fun nextQuestion() {
         index += 1
         _img_question.setImageDrawable(copyListSoal[index])
+    }
+
+    override fun onPause() {
+        super.onPause()
+        resetAllMediaPlayer()
+    }
+
+    private fun resetAllMediaPlayer() {
+        if (mediaPlayerChooseWrong.isPlaying) mediaPlayerChooseWrong.stop();mediaPlayerChooseWrong.reset()
+        if (mediaPlayerChooseRight.isPlaying) mediaPlayerChooseRight.stop(); mediaPlayerChooseRight.reset()
+        if (mediaPlayerPlayGame.isPlaying) mediaPlayerPlayGame.stop(); mediaPlayerPlayGame.reset()
     }
 }

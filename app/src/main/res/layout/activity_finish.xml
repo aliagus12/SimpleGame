@@ -1,20 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Finish">
 
-    <include
-        android:id="@+id/_toolbar_finish"
-        layout="@layout/general_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize" />
-
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/_toolbar_finish"
         android:alpha="0.3"
         android:background="@drawable/background_pedesaan" />
 
@@ -29,17 +23,45 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Selamat, Kamu adalah anak yang Pintar."
+            android:text="Selamat, Kamu adalah anak yang Pintar"
             android:textColor="@android:color/black"
             android:textSize="25sp"
             android:textStyle="bold|italic" />
+
+        <RelativeLayout
+            android:id="@+id/_relative_lottie"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/_txt_ucapan_selamat"
+            android:layout_marginTop="@dimen/five">
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/_trophy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/trophy" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/_dislike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:visibility="gone"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/dislike" />
+
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/_txt_motivasi1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/_txt_ucapan_selamat"
-            android:layout_marginTop="@dimen/fifty"
+            android:layout_below="@+id/_relative_lottie"
+            android:layout_marginTop="40dp"
             android:gravity="center"
             android:text="Ayo... Jangan lupa untuk membuang sampah tempatnya."
             android:textColor="@android:color/black"

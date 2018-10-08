@@ -9,7 +9,7 @@
     <dimen name="btn_panduan">150dp</dimen>
     <dimen name="title_panduan_apliksi">25sp</dimen>
     <dimen name="title_materi">25sp</dimen>
-    <dimen name="question">200dp</dimen>
+    <dimen name="question">250dp</dimen>
     <dimen name="ten">10dp</dimen>
     <dimen name="tong">75dp</dimen>
 </resources>

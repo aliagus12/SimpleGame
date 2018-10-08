@@ -8,7 +8,7 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "game.simple.com.simplegame"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -28,7 +28,10 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     testImplementation 'junit:junit:4.12'
-    implementation "org.jetbrains.anko:anko-commons:0.10.7"
+    implementation "org.jetbrains.anko:anko:0.10.7"
+    implementation "org.jetbrains.anko:anko-design:0.10.7"
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation "com.airbnb.android:lottie:2.5.1"
+
 }
