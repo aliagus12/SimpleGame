@@ -8,12 +8,14 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
+import android.view.LayoutInflater
 import android.view.View
 import kotlinx.android.synthetic.main.activity_game.*
 import kotlinx.android.synthetic.main.dialog_right_choose.*
 import kotlinx.android.synthetic.main.dialog_wrong_choose.*
 import kotlinx.android.synthetic.main.general_toolbar.*
 import org.jetbrains.anko.intentFor
+import org.jetbrains.anko.sdk27.coroutines.onClick
 
 class Game : AppCompatActivity() {
 
@@ -363,6 +365,7 @@ class Game : AppCompatActivity() {
     }
 
     private fun checkSampah(listJenisSampah: ArrayList<Int>) {
+        if (mediaPlayerPlayGame.isPlaying) mediaPlayerPlayGame.pause()
         indexReal = listSoal.indexOf(copyListSoal[index])
         if (listJenisSampah.contains(indexReal)) {
             score += 1
@@ -370,15 +373,13 @@ class Game : AppCompatActivity() {
             if (index == totalIndexSoalLevel) {
                 timerCounter.onFinish()
             } else {
-                if (mediaPlayerPlayGame.isPlaying) mediaPlayerPlayGame.pause()
-                if (!mediaPlayerChooseRight.isPlaying) mediaPlayerChooseRight.start()
                 showRightDialog(score.toString())
+                if (!mediaPlayerChooseRight.isPlaying) mediaPlayerChooseRight.start()
             }
         } else {
             wrong += 1
-            if (mediaPlayerPlayGame.isPlaying) mediaPlayerPlayGame.pause()
-            if (!mediaPlayerChooseWrong.isPlaying) mediaPlayerChooseWrong.start()
             showWrongDialog(score.toString(), wrong)
+            if (!mediaPlayerChooseWrong.isPlaying) mediaPlayerChooseWrong.start()
         }
     }
 
@@ -395,31 +396,35 @@ class Game : AppCompatActivity() {
     }
 
     private fun showRightDialog(score: String) {
+        val view = layoutInflater.inflate(R.layout.dialog_right_choose, null)
         dialogRight = Dialog(this@Game)
         dialogRight?.let {
-            it.setContentView(R.layout.dialog_right_choose)
+            it.setContentView(view)
             it._txt_score_dialog.text = score
-            it._btn_next.setOnClickListener {
+            it.setCancelable(false)
+            it.show()
+            it._btn_next.onClick {
                 if (mediaPlayerChooseRight.isPlaying) mediaPlayerChooseRight.stop(); mediaPlayerChooseRight.reset()
                 if (!mediaPlayerPlayGame.isPlaying) mediaPlayerPlayGame.start()
                 setMediaPlayer()
                 nextQuestion()
                 dialogRight?.dismiss()
             }
-            it._btn_finish.setOnClickListener {
+            it._btn_finish.onClick {
                 timerCounter.onFinish()
                 dialogRight?.dismiss()
             }
-            it.show()
-            it.setCancelable(false)
         }
     }
 
     private fun showWrongDialog(score: String, wrong: Int) {
+        val view = layoutInflater.inflate(R.layout.dialog_wrong_choose, null)
         dialogWrong = Dialog(this@Game)
         dialogWrong?.let {
-            it.setContentView(R.layout.dialog_wrong_choose)
+            it.setContentView(view)
             it._txt_score_dialog_wrong.text = score
+            it.setCancelable(false)
+            it.show()
             if (wrong == 2) {
                 it._btn_next_wrong.visibility = View.GONE
             }
@@ -434,10 +439,7 @@ class Game : AppCompatActivity() {
                 timerCounter.onFinish()
                 dialogWrong?.dismiss()
             }
-            it.show()
-            it.setCancelable(false)
         }
-
     }
 
     private fun nextQuestion() {
