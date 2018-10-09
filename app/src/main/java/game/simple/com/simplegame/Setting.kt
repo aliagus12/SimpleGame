@@ -154,8 +154,6 @@ class Setting : AppCompatActivity() {
         if (!_chk_pedesaan.isChecked && !_chk_perkotaan.isChecked) {
             chooseBackground = 0
         }
-        Log.d(TAG, "selectedSound $chooseSound")
-        Log.d(TAG, "selectedBackgound $chooseBackground")
         val intent = Intent()
         intent.putExtra("level", chooseLevel)
         intent.putExtra("sound", chooseSound)

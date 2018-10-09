@@ -107,7 +107,7 @@ class Game : AppCompatActivity() {
                 if (selectedBackground == 0) {
                     _img_background.setBackgroundResource(R.drawable.background_pedesaan)
                 } else {
-                    _img_background.background = ContextCompat.getDrawable(this@Game, R.drawable.tong1)
+                    _img_background.background = ContextCompat.getDrawable(this@Game, R.drawable.background_perkotaan)
                 }
                 selectedSound = data?.getIntExtra("sound", 0) ?: 0
                 mediaPlayerPlayGame = MediaPlayer.create(this@Game, listSound[selectedSound])
@@ -357,10 +357,9 @@ class Game : AppCompatActivity() {
     }
 
     private fun checkVisibility() {
-        _linear_question.visibility = if (isStart) View.VISIBLE else View.GONE
+        _relative_main.visibility = if (isStart) View.VISIBLE else View.GONE
         _btn_start_game.visibility = if (isStart) View.GONE else View.VISIBLE
         _btn_finish_game.visibility = if (isStart) View.VISIBLE else View.GONE
-        _relative_top.visibility = if (isStart) View.VISIBLE else View.GONE
     }
 
     private fun checkSampah(listJenisSampah: ArrayList<Int>) {
