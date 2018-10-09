@@ -15,10 +15,116 @@
         android:background="@drawable/background_pedesaan"
         tools:ignore="ContentDescription" />
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/_label_choose_background"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="?android:attr/actionBarSize"
+        android:background="@android:color/holo_blue_bright"
+        android:paddingLeft="@dimen/ten"
+        android:paddingStart="@dimen/ten"
+        android:text="Choose background"
+        android:textColor="@android:color/black"
+        android:textSize="15sp"
+        tools:ignore="RtlSymmetry" />
+
+    <LinearLayout
+        android:id="@+id/_linear_background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/_label_choose_background"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:orientation="vertical"
+        android:padding="@dimen/ten">
+
+        <CheckBox
+            android:id="@+id/_chk_pedesaan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="Pedesaan" />
+
+        <CheckBox
+            android:id="@+id/_chk_perkotaan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="Perkotaan" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/_label_choose_sound"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/_linear_background"
+        android:background="@android:color/holo_blue_bright"
+        android:paddingLeft="@dimen/ten"
+        android:paddingStart="@dimen/ten"
+        android:text="Choose sound"
+        android:textColor="@android:color/black"
+        android:textSize="15sp"
+        tools:ignore="RtlSymmetry" />
+
+    <LinearLayout
+        android:id="@+id/_linear_sound"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/_label_choose_sound"
+        android:layout_marginLeft="20dp"
+        android:orientation="vertical"
+        android:padding="@dimen/ten">
+
+        <CheckBox
+            android:id="@+id/_chk_anak_indonesia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="Anak Indonesia" />
+
+        <CheckBox
+            android:id="@+id/_chk_balonku_ada_lima"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="Balonku ada lima" />
+
+        <CheckBox
+            android:id="@+id/_chk_burung_kakak_tua"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="Burung kakak tua" />
+
+        <CheckBox
+            android:id="@+id/_chk_kasih_ibu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="Kasih ibu" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/_label_choose_level"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/_linear_sound"
+        android:background="@android:color/holo_blue_bright"
+        android:paddingLeft="@dimen/ten"
+        android:paddingStart="@dimen/ten"
+        android:text="Choose level"
+        android:textColor="@android:color/black"
+        android:textSize="15sp"
+        tools:ignore="RtlSymmetry" />
+
+    <LinearLayout
+        android:id="@+id/_linear_level"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/_label_choose_level"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:orientation="vertical"
         android:padding="@dimen/ten"
         tools:ignore="UselessParent">
@@ -27,8 +133,9 @@
             android:id="@+id/_chk_level_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:checked="true"
             android:text="@string/level_one"
-            android:textSize="@dimen/twenty_two" />
+            android:textSize="15sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -57,7 +164,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/level_two"
-            android:textSize="@dimen/twenty_two" />
+            android:textSize="15sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -93,7 +200,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/level_three"
-            android:textSize="@dimen/twenty_two" />
+            android:textSize="15sp" />
 
         <LinearLayout
             android:layout_width="match_parent"

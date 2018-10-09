@@ -44,6 +44,7 @@ class Finish : AppCompatActivity() {
             mediaPlayerFinishGameHappy.start()
             _btn_lanjut.setOnClickListener { setResultBack(kodeLanjut) }
         }
+        _txt_finish_score.text = score.toString()
         _btn_ulangi.setOnClickListener { setResultBack(kodeUlangi) }
     }
 

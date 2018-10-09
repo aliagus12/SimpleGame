@@ -39,8 +39,9 @@ class Game : AppCompatActivity() {
     private val kodeKeluar = 0
     private val kodeUlangi = 1
     private val kodeLanjut = 2
-    private var pathSoundChoose = ""
-    private var pathSoundPlayGame = ""
+    private var listSound = ArrayList<Int>()
+    private var selectedSound = 0
+    private var selectedBackground = 0
     private lateinit var mediaPlayerChooseRight: MediaPlayer
     private lateinit var mediaPlayerChooseWrong: MediaPlayer
     private lateinit var mediaPlayerPlayGame: MediaPlayer
@@ -56,7 +57,11 @@ class Game : AppCompatActivity() {
             if (mediaPlayerPlayGame.isPlaying) mediaPlayerPlayGame.stop();mediaPlayerPlayGame.reset()
             if (mediaPlayerChooseRight.isPlaying) mediaPlayerChooseRight.stop();mediaPlayerChooseRight.reset()
             if (mediaPlayerChooseWrong.isPlaying) mediaPlayerChooseWrong.stop();mediaPlayerChooseWrong.reset()
-            startActivityForResult(intentFor<Finish>("score" to score), codeRequestFinish)
+            startActivityForResult(intentFor<Finish>(
+                    "score" to score,
+                    "selectedBackgroud" to selectedBackground,
+                    "selectedSound" to selectedSound
+            ), codeRequestFinish)
         }
     }
 
@@ -72,8 +77,9 @@ class Game : AppCompatActivity() {
         setLogam()
         setPlastik()
         setTumbuhan()
+        setListSound()
         setMediaPlayer()
-        mediaPlayerPlayGame = MediaPlayer.create(this@Game, R.raw.anak_indonesia)
+        mediaPlayerPlayGame = MediaPlayer.create(this@Game, listSound[selectedSound])
         setComponent()
     }
 
@@ -84,7 +90,11 @@ class Game : AppCompatActivity() {
     }
 
     private fun toSetting(): Boolean {
-        startActivityForResult(intentFor<Setting>("level" to level), codeRequestSetting)
+        startActivityForResult(intentFor<Setting>(
+                "level" to level,
+                "selectedBackground" to selectedBackground,
+                "selectedSound" to selectedSound
+        ), codeRequestSetting)
         return true
     }
 
@@ -93,6 +103,14 @@ class Game : AppCompatActivity() {
         when (requestCode) {
             codeRequestSetting -> {
                 level = data?.getIntExtra("level", 1) ?: 1
+                selectedBackground = data?.getIntExtra("background", 0) ?: 0
+                if (selectedBackground == 0) {
+                    _img_background.setBackgroundResource(R.drawable.background_pedesaan)
+                } else {
+                    _img_background.background = ContextCompat.getDrawable(this@Game, R.drawable.tong1)
+                }
+                selectedSound = data?.getIntExtra("sound", 0) ?: 0
+                mediaPlayerPlayGame = MediaPlayer.create(this@Game, listSound[selectedSound])
                 checkVisibility()
             }
 
@@ -124,7 +142,7 @@ class Game : AppCompatActivity() {
             _txt_timer.text = "0"
             _txt_score.text = "0"
             checkVisibility()
-            mediaPlayerPlayGame = MediaPlayer.create(this@Game, R.raw.anak_indonesia)
+            mediaPlayerPlayGame = MediaPlayer.create(this@Game, listSound[selectedSound])
             setMediaPlayer()
             copyListSoal.shuffle()
         } else {
@@ -269,6 +287,15 @@ class Game : AppCompatActivity() {
             add(14)
             add(15)
         }
+    }
+
+    private fun setListSound() {
+        listSound = arrayListOf(
+                R.raw.anak_indonesia,
+                R.raw.balonku_ada_lima,
+                R.raw.burung_kakatua,
+                R.raw.kasih_ibu
+        )
     }
 
     private fun setMediaPlayer() {

@@ -57,10 +57,31 @@
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/_txt_motivasi1"
+            android:id="@+id/_txt_text_score"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/_relative_lottie"
+            android:gravity="center"
+            android:text="Score"
+            android:textColor="@android:color/black"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/_txt_finish_score"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/_txt_text_score"
+            android:gravity="center"
+            android:text="0"
+            android:textColor="@android:color/black"
+            android:textSize="40sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/_txt_motivasi1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/_txt_finish_score"
             android:layout_marginTop="40dp"
             android:gravity="center"
             android:text="Ayo... Jangan lupa untuk membuang sampah tempatnya."
@@ -83,7 +104,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/_txt_motivasi2"
-            android:layout_marginTop="@dimen/fifty"
+            android:layout_marginTop="@dimen/ten"
             android:orientation="horizontal">
 
             <Button
@@ -107,9 +128,7 @@
                 android:background="@drawable/background_rectangle_green_with_radius"
                 android:text="Lanjut"
                 android:textColor="@android:color/white" />
-
         </LinearLayout>
-
 
     </RelativeLayout>
 
