@@ -45,6 +45,8 @@ class Game : AppCompatActivity() {
     private lateinit var mediaPlayerChooseRight: MediaPlayer
     private lateinit var mediaPlayerChooseWrong: MediaPlayer
     private lateinit var mediaPlayerPlayGame: MediaPlayer
+    private var dialogWrong: Dialog? = null
+    private var dialogRight: Dialog? = null
     private val TAG = Game::class.java.simpleName
 
     private var timerCounter = object : CountDownTimer(90000, 1000) {
@@ -54,9 +56,6 @@ class Game : AppCompatActivity() {
 
         override fun onFinish() {
             isFinishAll = true
-            if (mediaPlayerPlayGame.isPlaying) mediaPlayerPlayGame.stop();mediaPlayerPlayGame.reset()
-            if (mediaPlayerChooseRight.isPlaying) mediaPlayerChooseRight.stop();mediaPlayerChooseRight.reset()
-            if (mediaPlayerChooseWrong.isPlaying) mediaPlayerChooseWrong.stop();mediaPlayerChooseWrong.reset()
             startActivityForResult(intentFor<Finish>(
                     "score" to score,
                     "selectedBackgroud" to selectedBackground,
@@ -396,43 +395,49 @@ class Game : AppCompatActivity() {
     }
 
     private fun showRightDialog(score: String) {
-        val dialog = Dialog(this@Game)
-        dialog.setContentView(R.layout.dialog_right_choose)
-        dialog._txt_score_dialog.text = score
-        dialog._btn_next.setOnClickListener {
-            if (mediaPlayerChooseRight.isPlaying) mediaPlayerChooseRight.stop(); mediaPlayerChooseRight.reset()
-            if (!mediaPlayerPlayGame.isPlaying) mediaPlayerPlayGame.start()
-            setMediaPlayer()
-            nextQuestion()
-            dialog.dismiss()
+        dialogRight = Dialog(this@Game)
+        dialogRight?.let {
+            it.setContentView(R.layout.dialog_right_choose)
+            it._txt_score_dialog.text = score
+            it._btn_next.setOnClickListener {
+                if (mediaPlayerChooseRight.isPlaying) mediaPlayerChooseRight.stop(); mediaPlayerChooseRight.reset()
+                if (!mediaPlayerPlayGame.isPlaying) mediaPlayerPlayGame.start()
+                setMediaPlayer()
+                nextQuestion()
+                dialogRight?.dismiss()
+            }
+            it._btn_finish.setOnClickListener {
+                timerCounter.onFinish()
+                dialogRight?.dismiss()
+            }
+            it.show()
+            it.setCancelable(false)
         }
-        dialog._btn_finish.setOnClickListener {
-            timerCounter.onFinish()
-            dialog.dismiss()
-        }
-        dialog.show()
     }
 
     private fun showWrongDialog(score: String, wrong: Int) {
-        val dialog = Dialog(this@Game)
-        dialog.setContentView(R.layout.dialog_wrong_choose)
-        dialog._txt_score_dialog_wrong.text = score
-        if (wrong == 2) {
-            dialog._btn_next_wrong.visibility = View.GONE
+        dialogWrong = Dialog(this@Game)
+        dialogWrong?.let {
+            it.setContentView(R.layout.dialog_wrong_choose)
+            it._txt_score_dialog_wrong.text = score
+            if (wrong == 2) {
+                it._btn_next_wrong.visibility = View.GONE
+            }
+            it._btn_next_wrong.setOnClickListener {
+                if (mediaPlayerChooseWrong.isPlaying) mediaPlayerChooseWrong.stop();mediaPlayerChooseWrong.reset()
+                if (!mediaPlayerPlayGame.isPlaying) mediaPlayerPlayGame.start()
+                setMediaPlayer()
+                nextQuestion()
+                dialogWrong?.dismiss()
+            }
+            it._btn_finish_wrong.setOnClickListener {
+                timerCounter.onFinish()
+                dialogWrong?.dismiss()
+            }
+            it.show()
+            it.setCancelable(false)
         }
-        dialog._btn_next_wrong.setOnClickListener {
-            if (mediaPlayerChooseWrong.isPlaying) mediaPlayerChooseWrong.stop();mediaPlayerChooseWrong.reset()
-            if (!mediaPlayerPlayGame.isPlaying) mediaPlayerPlayGame.start()
-            setMediaPlayer()
-            nextQuestion()
-            dialog.dismiss()
-        }
-        dialog._btn_finish_wrong.setOnClickListener {
-            timerCounter.onFinish()
-            dialog.dismiss()
-        }
-        dialog.show()
-        dialog.setCancelable(false)
+
     }
 
     private fun nextQuestion() {
@@ -443,6 +448,12 @@ class Game : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         resetAllMediaPlayer()
+        hiddenAllDialog()
+    }
+
+    private fun hiddenAllDialog() {
+        dialogRight?.let { if (it.isShowing) it.dismiss() }
+        dialogWrong?.let { if (it.isShowing) it.dismiss() }
     }
 
     private fun resetAllMediaPlayer() {
