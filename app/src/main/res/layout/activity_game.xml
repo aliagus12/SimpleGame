@@ -199,19 +199,54 @@
 
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/_btn_start_game"
-        android:layout_width="200dp"
+    <RelativeLayout
+        android:id="@+id/_relative_bottom"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:background="@drawable/background_rectangle_blue_with_radius"
-        android:fontFamily="casual"
-        android:text="@string/start"
-        android:textColor="@android:color/white"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        android:visibility="gone"
-        tools:ignore="RelativeOverlap" />
+        android:layout_centerInParent="true">
 
+        <TextView
+            android:id="@+id/_txt_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/fifty"
+            android:gravity="center"
+            android:lineSpacingExtra="16sp"
+            android:text="@string/title"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/size_title"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/_btn_start_game"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/_txt_title"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"
+            android:background="@drawable/background_rectangle_blue_with_radius"
+            android:fontFamily="casual"
+            android:text="@string/start"
+            android:textColor="@android:color/white"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            tools:ignore="RelativeOverlap" />
+
+        <Button
+            android:id="@+id/_btn_panduan"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/_btn_start_game"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/twenty_two"
+            android:background="@drawable/background_rectangle_blue_with_radius"
+            android:fontFamily="casual"
+            android:text="@string/panduan"
+            android:textColor="@android:color/white"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            tools:ignore="RelativeOverlap" />
+
+    </RelativeLayout>
 
 </RelativeLayout>

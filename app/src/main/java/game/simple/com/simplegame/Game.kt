@@ -313,6 +313,7 @@ class Game : AppCompatActivity() {
         _img_tong_kaca.setOnClickListener { checkSampah(listKaca) }
         _img_tong_logam.setOnClickListener { checkSampah(listLogam) }
         _img_tong_kertas_tumbuhan.setOnClickListener { checkSampah(listTumbuhan) }
+        _btn_panduan.setOnClickListener { startActivity(intentFor<Panduan>()) }
     }
 
     private fun startGame() {
@@ -358,7 +359,7 @@ class Game : AppCompatActivity() {
 
     private fun checkVisibility() {
         _relative_main.visibility = if (isStart) View.VISIBLE else View.GONE
-        _btn_start_game.visibility = if (isStart) View.GONE else View.VISIBLE
+        _relative_bottom.visibility = if (isStart) View.GONE else View.VISIBLE
         _btn_finish_game.visibility = if (isStart) View.VISIBLE else View.GONE
     }
 
