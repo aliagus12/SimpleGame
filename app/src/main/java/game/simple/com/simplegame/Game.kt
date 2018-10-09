@@ -17,7 +17,7 @@ import org.jetbrains.anko.intentFor
 
 class Game : AppCompatActivity() {
 
-    private var listSoal = ArrayList<Drawable?>()
+    private var listSoal = ArrayList<Int>()
     private var listTong = ArrayList<Drawable?>()
     private var listOrganik = ArrayList<Int>()
     private var listAnOrganik = ArrayList<Int>()
@@ -29,7 +29,7 @@ class Game : AppCompatActivity() {
     private var isFinishAll = false
     private var index = 0
     private var score = 0
-    private var copyListSoal = ArrayList<Drawable?>()
+    private var copyListSoal = ArrayList<Int>()
     private var indexReal = 0
     private var level = 1
     private var wrong = 0
@@ -151,35 +151,35 @@ class Game : AppCompatActivity() {
     }
 
     private fun setAllSoal() {
-        listSoal.apply {
-            add(ContextCompat.getDrawable(this@Game, R.drawable.soal1))
-            add(ContextCompat.getDrawable(this@Game, R.drawable.soal2))
-            add(ContextCompat.getDrawable(this@Game, R.drawable.soal3))
-            add(ContextCompat.getDrawable(this@Game, R.drawable.soal4))
-            add(ContextCompat.getDrawable(this@Game, R.drawable.soal5))
-            add(ContextCompat.getDrawable(this@Game, R.drawable.soal6))
-            add(ContextCompat.getDrawable(this@Game, R.drawable.soal7))
-            add(ContextCompat.getDrawable(this@Game, R.drawable.soal8))
-            add(ContextCompat.getDrawable(this@Game, R.drawable.soal9))
-            add(ContextCompat.getDrawable(this@Game, R.drawable.soal10))
-            add(ContextCompat.getDrawable(this@Game, R.drawable.soal11))
-            add(ContextCompat.getDrawable(this@Game, R.drawable.soal12))
-            add(ContextCompat.getDrawable(this@Game, R.drawable.soal13))
-            add(ContextCompat.getDrawable(this@Game, R.drawable.soal14))
-            add(ContextCompat.getDrawable(this@Game, R.drawable.soal15))
-            add(ContextCompat.getDrawable(this@Game, R.drawable.soal16))
-            add(ContextCompat.getDrawable(this@Game, R.drawable.soal17))
-            add(ContextCompat.getDrawable(this@Game, R.drawable.soal18))
-            add(ContextCompat.getDrawable(this@Game, R.drawable.soal19))
-            add(ContextCompat.getDrawable(this@Game, R.drawable.soal20))
-            add(ContextCompat.getDrawable(this@Game, R.drawable.soal21))
-            add(ContextCompat.getDrawable(this@Game, R.drawable.soal22))
-            add(ContextCompat.getDrawable(this@Game, R.drawable.soal23))
-            add(ContextCompat.getDrawable(this@Game, R.drawable.soal24))
-            add(ContextCompat.getDrawable(this@Game, R.drawable.soal25))
-            add(ContextCompat.getDrawable(this@Game, R.drawable.soal26))
-            add(ContextCompat.getDrawable(this@Game, R.drawable.soal27))
-        }
+        listSoal = arrayListOf(
+                R.drawable.soal1,
+                R.drawable.soal2,
+                R.drawable.soal3,
+                R.drawable.soal4,
+                R.drawable.soal5,
+                R.drawable.soal6,
+                R.drawable.soal7,
+                R.drawable.soal8,
+                R.drawable.soal9,
+                R.drawable.soal10,
+                R.drawable.soal11,
+                R.drawable.soal12,
+                R.drawable.soal13,
+                R.drawable.soal14,
+                R.drawable.soal15,
+                R.drawable.soal16,
+                R.drawable.soal17,
+                R.drawable.soal18,
+                R.drawable.soal19,
+                R.drawable.soal20,
+                R.drawable.soal21,
+                R.drawable.soal22,
+                R.drawable.soal23,
+                R.drawable.soal24,
+                R.drawable.soal25,
+                R.drawable.soal26,
+                R.drawable.soal27
+        )
     }
 
     private fun setSoalLevel1() {
@@ -354,7 +354,7 @@ class Game : AppCompatActivity() {
         timerCounter.start()
         checkVisibility()
         _general_toolbar.menu.findItem(R.id.menu_setting).isVisible = !isStart
-        _img_question.setImageDrawable(copyListSoal[index])
+        _img_question.setImageDrawable(ContextCompat.getDrawable(this@Game, copyListSoal[index]))
     }
 
     private fun checkVisibility() {
@@ -437,7 +437,7 @@ class Game : AppCompatActivity() {
 
     private fun nextQuestion() {
         index += 1
-        _img_question.setImageDrawable(copyListSoal[index])
+        _img_question.setImageDrawable(ContextCompat.getDrawable(this@Game, copyListSoal[index]))
     }
 
     override fun onPause() {
