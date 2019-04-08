@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
-import android.view.LayoutInflater
 import android.view.View
 import kotlinx.android.synthetic.main.activity_game.*
 import kotlinx.android.synthetic.main.dialog_right_choose.*
@@ -16,6 +15,7 @@ import kotlinx.android.synthetic.main.dialog_wrong_choose.*
 import kotlinx.android.synthetic.main.general_toolbar.*
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.sdk27.coroutines.onClick
+import kotlin.collections.ArrayList
 
 class Game : AppCompatActivity() {
 
@@ -42,11 +42,14 @@ class Game : AppCompatActivity() {
     private val kodeUlangi = 1
     private val kodeLanjut = 2
     private var listSound = ArrayList<Int>()
+    private var listSoundSampah = ArrayList<Int>()
     private var selectedSound = 0
     private var selectedBackground = 0
+    private var countWrongAnswer = 0
     private lateinit var mediaPlayerChooseRight: MediaPlayer
     private lateinit var mediaPlayerChooseWrong: MediaPlayer
     private lateinit var mediaPlayerPlayGame: MediaPlayer
+    private var mediaPlayerSampah: MediaPlayer? = null
     private var dialogWrong: Dialog? = null
     private var dialogRight: Dialog? = null
     private val TAG = Game::class.java.simpleName
@@ -307,13 +310,27 @@ class Game : AppCompatActivity() {
     private fun setComponent() {
         checkVisibility()
         _btn_start_game.setOnClickListener { startGame() }
-        _btn_finish_game.setOnClickListener { timerCounter.onFinish() }
-        _img_tong_organik.setOnClickListener { checkSampah(listOrganik) }
-        _img_tong_anorganik.setOnClickListener { checkSampah(listAnOrganik) }
-        _img_tong_plastik.setOnClickListener { checkSampah(listPlastik) }
-        _img_tong_kaca.setOnClickListener { checkSampah(listKaca) }
-        _img_tong_logam.setOnClickListener { checkSampah(listLogam) }
-        _img_tong_kertas_tumbuhan.setOnClickListener { checkSampah(listTumbuhan) }
+        _btn_finish_game.setOnClickListener {
+            timerCounter.onFinish()
+        }
+        _img_tong_organik.setOnClickListener {
+            checkSampah(listOrganik)
+        }
+        _img_tong_anorganik.setOnClickListener {
+            checkSampah(listAnOrganik)
+        }
+        _img_tong_plastik.setOnClickListener {
+            checkSampah(listPlastik)
+        }
+        _img_tong_kaca.setOnClickListener {
+            checkSampah(listKaca)
+        }
+        _img_tong_logam.setOnClickListener {
+            checkSampah(listLogam)
+        }
+        _img_tong_kertas_tumbuhan.setOnClickListener {
+            checkSampah(listTumbuhan)
+        }
         _btn_panduan.setOnClickListener { startActivity(intentFor<Panduan>()) }
     }
 
@@ -356,6 +373,81 @@ class Game : AppCompatActivity() {
         checkVisibility()
         _general_toolbar.menu.findItem(R.id.menu_setting).isVisible = !isStart
         _img_question.setImageDrawable(ContextCompat.getDrawable(this@Game, copyListSoal[index]))
+        playSoundSampah()
+    }
+
+    private fun playSoundSampah(){
+        when(copyListSoal[index]) {
+            R.drawable.soal1 -> {
+                createMediaPlayer(R.raw.baterai)
+            }
+
+            R.drawable.soal2, R.drawable.soal17 -> {
+                createMediaPlayer(R.raw.botol_kaca)
+            }
+
+            R.drawable.soal3, R.drawable.soal16 -> {
+                createMediaPlayer(R.raw.daun)
+            }
+
+            R.drawable.soal4 -> {
+                createMediaPlayer(R.raw.kaset_dvd)
+            }
+
+            R.drawable.soal5 -> {
+                createMediaPlayer(R.raw.sisa_buah_apel)
+            }
+
+            R.drawable.soal6 -> {
+                createMediaPlayer(R.raw.tulang)
+            }
+
+            R.drawable.soal7 -> {
+                createMediaPlayer(R.raw.kulit_pisang)
+            }
+
+            R.drawable.soal8 -> {
+                createMediaPlayer(R.raw.kaleng_minuman)
+            }
+
+            R.drawable.soal9, R.drawable.soal12 -> {
+                createMediaPlayer(R.raw.kertas)
+            }
+
+            R.drawable.soal10 -> {
+                createMediaPlayer(R.raw.kantong_plastik)
+            }
+
+            R.drawable.soal13 -> {
+                createMediaPlayer(R.raw.cangkang_telur)
+            }
+
+            R.drawable.soal14 -> {
+                createMediaPlayer(R.raw.duri_ikan)
+            }
+
+            R.drawable.soal24 -> {
+                createMediaPlayer(R.raw.gembok)
+            }
+
+            R.drawable.soal25 -> {
+                createMediaPlayer(R.raw.paku)
+            }
+
+            R.drawable.soal18, R.drawable.soal19, R.drawable.soal20, R.drawable.soal21, R.drawable.soal22, R.drawable.soal23 -> {
+                createMediaPlayer(R.raw.kaca)
+            }
+        }
+    }
+
+    private fun createMediaPlayer(soundInt: Int){
+        mediaPlayerSampah = MediaPlayer.create(this@Game, soundInt)
+                mediaPlayerSampah?.setOnCompletionListener {
+                    it.stop()
+                    it.reset()
+                    mediaPlayerSampah = null
+                }
+        mediaPlayerSampah?.start()
     }
 
     private fun checkVisibility() {
@@ -445,6 +537,7 @@ class Game : AppCompatActivity() {
     private fun nextQuestion() {
         index += 1
         _img_question.setImageDrawable(ContextCompat.getDrawable(this@Game, copyListSoal[index]))
+        playSoundSampah()
     }
 
     override fun onPause() {
