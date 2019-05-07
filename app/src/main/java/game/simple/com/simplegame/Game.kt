@@ -1,5 +1,6 @@
 package game.simple.com.simplegame
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.drawable.Drawable
@@ -8,6 +9,7 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.View
 import kotlinx.android.synthetic.main.activity_game.*
 import kotlinx.android.synthetic.main.dialog_right_choose.*
@@ -83,7 +85,7 @@ class Game : AppCompatActivity() {
         setPlastik()
         setTumbuhan()
         setListSound()
-        setMediaPlayer()
+        setMediaPlayerChoose()
         mediaPlayerPlayGame = MediaPlayer.create(this@Game, listSound[selectedSound])
         setComponent()
     }
@@ -107,16 +109,20 @@ class Game : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             codeRequestSetting -> {
-                level = data?.getIntExtra("level", 1) ?: 1
-                selectedBackground = data?.getIntExtra("background", 0) ?: 0
-                if (selectedBackground == 0) {
-                    _img_background.setBackgroundResource(R.drawable.background_pedesaan)
+                if (resultCode == Activity.RESULT_OK) {
+                    level = data?.getIntExtra("level", 1) ?: 1
+                    selectedBackground = data?.getIntExtra("background", 0) ?: 0
+                    if (selectedBackground == 0) {
+                        _img_background.setBackgroundResource(R.drawable.background_pedesaan)
+                    } else {
+                        _img_background.background = ContextCompat.getDrawable(this@Game, R.drawable.background_perkotaan)
+                    }
+                    selectedSound = data?.getIntExtra("sound", 0) ?: 0
+                    isFinishAll = true
+
                 } else {
-                    _img_background.background = ContextCompat.getDrawable(this@Game, R.drawable.background_perkotaan)
+                    Log.d(TAG, "result Cancel")
                 }
-                selectedSound = data?.getIntExtra("sound", 0) ?: 0
-                mediaPlayerPlayGame = MediaPlayer.create(this@Game, listSound[selectedSound])
-                checkVisibility()
             }
 
             codeRequestFinish -> {
@@ -128,6 +134,7 @@ class Game : AppCompatActivity() {
                         onResume()
                     }
                     kodeUlangi -> {
+                        isFinishAll = true
                         onResume()
                     }
                 }
@@ -137,6 +144,7 @@ class Game : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        checkVisibility()
         if (isFinishAll) {
             score = 0
             index = 0
@@ -149,10 +157,11 @@ class Game : AppCompatActivity() {
             _txt_score.text = "0"
             checkVisibility()
             mediaPlayerPlayGame = MediaPlayer.create(this@Game, listSound[selectedSound])
-            setMediaPlayer()
+            setMediaPlayerChoose()
+            setLiveCount()
             copyListSoal.shuffle()
         } else {
-
+            Log.d(TAG, "not finish all")
         }
     }
 
@@ -304,13 +313,22 @@ class Game : AppCompatActivity() {
         )
     }
 
-    private fun setMediaPlayer() {
+    private fun setMediaPlayerChoose() {
         mediaPlayerChooseRight = MediaPlayer.create(this@Game, R.raw.sound_yee)
         mediaPlayerChooseWrong = MediaPlayer.create(this@Game, R.raw.wrong)
     }
 
+    private fun setLiveCount() {
+        if (wrong == 0) {
+            txt_live.text = "* *"
+        } else if (wrong == 1) {
+            txt_live.text = "*"
+        } else {
+            txt_live.text = ""
+        }
+    }
+
     private fun setComponent() {
-        checkVisibility()
         _btn_start_game.setOnClickListener { startGame() }
         _btn_finish_game.setOnClickListener {
             timerCounter.onFinish()
@@ -373,13 +391,12 @@ class Game : AppCompatActivity() {
         if (!mediaPlayerPlayGame.isPlaying) mediaPlayerPlayGame.start()
         timerCounter.start()
         checkVisibility()
-        _general_toolbar.menu.findItem(R.id.menu_setting).isVisible = !isStart
         _img_question.setImageDrawable(ContextCompat.getDrawable(this@Game, copyListSoal[index]))
         playSoundSampah()
     }
 
-    private fun playSoundSampah(){
-        when(copyListSoal[index]) {
+    private fun playSoundSampah() {
+        when (copyListSoal[index]) {
             R.drawable.soal1 -> {
                 createMediaPlayer(R.raw.baterai)
             }
@@ -442,13 +459,13 @@ class Game : AppCompatActivity() {
         }
     }
 
-    private fun createMediaPlayer(soundInt: Int){
+    private fun createMediaPlayer(soundInt: Int) {
         mediaPlayerSampah = MediaPlayer.create(this@Game, soundInt)
-                mediaPlayerSampah?.setOnCompletionListener {
-                    it.stop()
-                    it.reset()
-                    mediaPlayerSampah = null
-                }
+        mediaPlayerSampah?.setOnCompletionListener {
+            it.stop()
+            it.reset()
+            mediaPlayerSampah = null
+        }
         mediaPlayerSampah?.start()
     }
 
@@ -456,6 +473,7 @@ class Game : AppCompatActivity() {
         _relative_main.visibility = if (isStart) View.VISIBLE else View.GONE
         _relative_bottom.visibility = if (isStart) View.GONE else View.VISIBLE
         _btn_finish_game.visibility = if (isStart) View.VISIBLE else View.GONE
+        _general_toolbar.menu.findItem(R.id.menu_setting).isVisible = !isStart
     }
 
     private fun checkSampah(listJenisSampah: ArrayList<Int>) {
@@ -472,6 +490,7 @@ class Game : AppCompatActivity() {
             }
         } else {
             wrong += 1
+            setLiveCount()
             showWrongDialog(score.toString(), wrong)
             if (!mediaPlayerChooseWrong.isPlaying) mediaPlayerChooseWrong.start()
         }
@@ -500,7 +519,7 @@ class Game : AppCompatActivity() {
             it._btn_next.onClick {
                 if (mediaPlayerChooseRight.isPlaying) mediaPlayerChooseRight.stop(); mediaPlayerChooseRight.reset()
                 if (!mediaPlayerPlayGame.isPlaying) mediaPlayerPlayGame.start()
-                setMediaPlayer()
+                setMediaPlayerChoose()
                 nextQuestion()
                 dialogRight?.dismiss()
             }
@@ -525,7 +544,7 @@ class Game : AppCompatActivity() {
             it._btn_next_wrong.setOnClickListener {
                 if (mediaPlayerChooseWrong.isPlaying) mediaPlayerChooseWrong.stop();mediaPlayerChooseWrong.reset()
                 if (!mediaPlayerPlayGame.isPlaying) mediaPlayerPlayGame.start()
-                setMediaPlayer()
+                setMediaPlayerChoose()
                 nextQuestion()
                 dialogWrong?.dismiss()
             }
