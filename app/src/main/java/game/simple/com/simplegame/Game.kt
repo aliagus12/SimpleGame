@@ -61,6 +61,7 @@ class Game : AppCompatActivity() {
 
         override fun onFinish() {
             isFinishAll = true
+            resetAllMediaPlayer()
             startActivityForResult(intentFor<Finish>(
                     "score" to score,
                     "selectedBackgroud" to selectedBackground,
@@ -139,6 +140,7 @@ class Game : AppCompatActivity() {
         if (isFinishAll) {
             score = 0
             index = 0
+            wrong = 0
             indexReal = 0
             isStart = false
             isFinishAll = false
