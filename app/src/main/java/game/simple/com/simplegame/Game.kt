@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.dialog_wrong_choose.*
 import kotlinx.android.synthetic.main.general_toolbar.*
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.sdk27.coroutines.onClick
+import java.util.*
 import kotlin.collections.ArrayList
 
 class Game : AppCompatActivity() {
@@ -33,7 +34,8 @@ class Game : AppCompatActivity() {
     private var isFinishAll = false
     private var index = 0
     private var score = 0
-    private var copyListSoal = ArrayList<Int>()
+    private var listSoalByLevel = ArrayList<Int>()
+    private var listSoalRandom = ArrayList<Int>()
     private var indexReal = 0
     private var level = 1
     private var wrong = 0
@@ -55,6 +57,8 @@ class Game : AppCompatActivity() {
     private var dialogWrong: Dialog? = null
     private var dialogRight: Dialog? = null
     private val TAG = Game::class.java.simpleName
+    private val jumlahSoalYangTampil = 10
+
 
     private var timerCounter = object : CountDownTimer(90000, 1000) {
         override fun onTick(millisUntilFinished: Long) {
@@ -88,6 +92,11 @@ class Game : AppCompatActivity() {
         setMediaPlayerChoose()
         mediaPlayerPlayGame = MediaPlayer.create(this@Game, listSound[selectedSound])
         setComponent()
+        setXRandom()
+    }
+
+    private fun setXRandom() {
+
     }
 
     private fun setToolbar() {
@@ -159,7 +168,7 @@ class Game : AppCompatActivity() {
             mediaPlayerPlayGame = MediaPlayer.create(this@Game, listSound[selectedSound])
             setMediaPlayerChoose()
             setLiveCount()
-            copyListSoal.shuffle()
+            //randomSoal()
         } else {
             Log.d(TAG, "not finish all")
         }
@@ -198,36 +207,70 @@ class Game : AppCompatActivity() {
     }
 
     private fun setSoalLevel1() {
-        copyListSoal.clear()
+        listSoalByLevel.clear()
         for (a in 0 until listOrganik.size) {
-            copyListSoal.add(listSoal[listOrganik[a]])
+            listSoalByLevel.add(listSoal[listOrganik[a]])
         }
         for (a in 0 until listAnOrganik.size) {
-            copyListSoal.add(listSoal[listAnOrganik[a]])
+            listSoalByLevel.add(listSoal[listAnOrganik[a]])
         }
     }
 
     private fun setSoalLevel2() {
         setSoalLevel1()
         for (a in 0 until listPlastik.size) {
-            copyListSoal.add(listSoal[listPlastik[a]])
+            listSoalByLevel.add(listSoal[listPlastik[a]])
         }
     }
 
     private fun setSoalLevel3() {
-        copyListSoal.clear()
+        listSoalByLevel.clear()
         for (a in 0 until listPlastik.size) {
-            copyListSoal.add(listSoal[listPlastik[a]])
+            listSoalByLevel.add(listSoal[listPlastik[a]])
         }
         for (a in 0 until listLogam.size) {
-            copyListSoal.add(listSoal[listLogam[a]])
+            listSoalByLevel.add(listSoal[listLogam[a]])
         }
         for (a in 0 until listKaca.size) {
-            copyListSoal.add(listSoal[listKaca[a]])
+            listSoalByLevel.add(listSoal[listKaca[a]])
         }
         for (a in 0 until listTumbuhan.size) {
-            copyListSoal.add(listSoal[listTumbuhan[a]])
+            listSoalByLevel.add(listSoal[listTumbuhan[a]])
         }
+    }
+
+    // kerena soal berdasarkan level maka m = jumlah soal sesuai level
+    // val m = listSoalByLevel.size
+    // fungsi LCM
+    private fun randomSoal() {
+        listSoalRandom.clear()
+        val m = listSoalByLevel.size
+        var x0 = Random().nextInt(m)
+        val a = 1
+        val b = 7
+        var xn: Int
+        val listIndex = ArrayList<Int>()
+        for (i in 0 until m) {
+            xn = ((a * x0) + b) % m
+            if (listSoalRandom.size < jumlahSoalYangTampil) {
+                if (!listSoalRandom.contains(listSoalByLevel[xn])) {
+                    listSoalRandom.add(listSoalByLevel[xn])
+                    listIndex.add(xn)
+                } else {
+                    for(j in 0 until m){
+                        if (!listSoalRandom.contains(listSoalByLevel[j])){
+                            listSoalRandom.add(listSoalByLevel[j])
+                            listIndex.add(j)
+                            break
+                        }
+                    }
+                }
+            } else {
+                break
+            }
+            x0 = xn
+        }
+        Log.d(TAG, "listIndex dari listSoalByLevel $listIndex")
     }
 
     private fun setTong() {
@@ -319,12 +362,10 @@ class Game : AppCompatActivity() {
     }
 
     private fun setLiveCount() {
-        if (wrong == 0) {
-            txt_live.text = "* *"
-        } else if (wrong == 1) {
-            txt_live.text = "*"
-        } else {
-            txt_live.text = ""
+        when (wrong) {
+            0 -> txt_live.text = "* *"
+            1 -> txt_live.text = "*"
+            else -> txt_live.text = ""
         }
     }
 
@@ -364,7 +405,7 @@ class Game : AppCompatActivity() {
                 _img_tong_kaca.visibility = View.GONE
                 _img_tong_kertas_tumbuhan.visibility = View.GONE
                 setSoalLevel1()
-                copyListSoal.shuffle()
+                randomSoal()
             }
             2 -> {
                 _img_tong_organik.visibility = View.VISIBLE
@@ -374,7 +415,7 @@ class Game : AppCompatActivity() {
                 _img_tong_kaca.visibility = View.GONE
                 _img_tong_kertas_tumbuhan.visibility = View.GONE
                 setSoalLevel2()
-                copyListSoal.shuffle()
+                randomSoal()
             }
             3 -> {
                 _img_tong_organik.visibility = View.GONE
@@ -384,19 +425,19 @@ class Game : AppCompatActivity() {
                 _img_tong_kaca.visibility = View.VISIBLE
                 _img_tong_kertas_tumbuhan.visibility = View.VISIBLE
                 setSoalLevel3()
-                copyListSoal.shuffle()
+                randomSoal()
             }
         }
         isStart = true
         if (!mediaPlayerPlayGame.isPlaying) mediaPlayerPlayGame.start()
         timerCounter.start()
         checkVisibility()
-        _img_question.setImageDrawable(ContextCompat.getDrawable(this@Game, copyListSoal[index]))
+        _img_question.setImageDrawable(ContextCompat.getDrawable(this@Game, listSoalRandom[index]))
         playSoundSampah()
     }
 
     private fun playSoundSampah() {
-        when (copyListSoal[index]) {
+        when (listSoalRandom[index]) {
             R.drawable.soal1 -> {
                 createMediaPlayer(R.raw.baterai)
             }
@@ -478,7 +519,7 @@ class Game : AppCompatActivity() {
 
     private fun checkSampah(listJenisSampah: ArrayList<Int>) {
         if (mediaPlayerPlayGame.isPlaying) mediaPlayerPlayGame.pause()
-        indexReal = listSoal.indexOf(copyListSoal[index])
+        indexReal = listSoal.indexOf(listSoalRandom[index])
         if (listJenisSampah.contains(indexReal)) {
             score += 1
             _txt_score.text = score.toString()
@@ -557,7 +598,7 @@ class Game : AppCompatActivity() {
 
     private fun nextQuestion() {
         index += 1
-        _img_question.setImageDrawable(ContextCompat.getDrawable(this@Game, copyListSoal[index]))
+        _img_question.setImageDrawable(ContextCompat.getDrawable(this@Game, listSoalRandom[index]))
         playSoundSampah()
     }
 
