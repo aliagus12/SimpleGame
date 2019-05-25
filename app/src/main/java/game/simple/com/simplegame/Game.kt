@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import kotlinx.android.synthetic.main.activity_game.*
+import kotlinx.android.synthetic.main.dialog_panduan.*
 import kotlinx.android.synthetic.main.dialog_right_choose.*
 import kotlinx.android.synthetic.main.dialog_wrong_choose.*
 import kotlinx.android.synthetic.main.general_toolbar.*
@@ -58,6 +59,13 @@ class Game : AppCompatActivity() {
     private var dialogRight: Dialog? = null
     private val TAG = Game::class.java.simpleName
     private val jumlahSoalYangTampil = 10
+    private val levelTongSampah = arrayListOf(
+            "Organik atau Anorganik",
+            "Organik, Anorganik atau Plastik",
+            "Logam, Kaca, Plastik atau Tumbuhan"
+    )
+    private val panduanPart1 = "Pada level ini kamu harus menentukan tong sampah"
+    private val panduanPart2 = "yang cocok pada jenis sampah diatas. Selamat Mencoba!"
 
 
     private var timerCounter = object : CountDownTimer(90000, 1000) {
@@ -370,7 +378,11 @@ class Game : AppCompatActivity() {
     }
 
     private fun setComponent() {
-        _btn_start_game.setOnClickListener { startGame() }
+        _btn_start_game.setOnClickListener {
+            isStart = true
+            checkVisibility()
+            showDialogPanduan()
+        }
         _btn_finish_game.setOnClickListener {
             timerCounter.onFinish()
         }
@@ -428,10 +440,9 @@ class Game : AppCompatActivity() {
                 randomSoal()
             }
         }
-        isStart = true
+
         if (!mediaPlayerPlayGame.isPlaying) mediaPlayerPlayGame.start()
         timerCounter.start()
-        checkVisibility()
         _img_question.setImageDrawable(ContextCompat.getDrawable(this@Game, listSoalRandom[index]))
         playSoundSampah()
     }
@@ -592,6 +603,22 @@ class Game : AppCompatActivity() {
             it._btn_finish_wrong.setOnClickListener {
                 timerCounter.onFinish()
                 dialogWrong?.dismiss()
+            }
+        }
+    }
+
+    private fun showDialogPanduan(){
+        val view = layoutInflater.inflate(R.layout.dialog_panduan, null)
+        val dialogPanduan = Dialog(this@Game)
+        dialogPanduan.let {
+            it.setTitle("Panduan")
+            it.setContentView(view)
+            it.setCancelable(false)
+            it.show()
+            it._txt_panduan.text = "$panduanPart1 ${levelTongSampah[level - 1]} $panduanPart2"
+            it._btn_ok_panduan.setOnClickListener {
+                dialogPanduan.dismiss()
+                startGame()
             }
         }
     }

@@ -29,4 +29,6 @@
     <string name="level_two">Level 2</string>
     <string name="level_three">Level 3</string>
     <string name="save">Save</string>
+    <string name="ok">Ok</string>
+    <string name="panduan_game">Panduan Game</string>
 </resources>
